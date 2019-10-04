@@ -28,8 +28,9 @@ app.post("/sendMessage", function(req,res){
 })
 
 app.post("/receiveMessage", function(req,res){
-    console.log("Method called");
-    console.log(req.body);
+    var Message = req.body.Body;
+    messagesArray.push(Message);
+    res.redirect("/messages");
 })
 
 app.listen(process.env.PORT|| 3000, function(){
