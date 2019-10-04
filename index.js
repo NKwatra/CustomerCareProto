@@ -27,7 +27,7 @@ app.post("/sendMessage", function(req,res){
     res.redirect("/messages");
 })
 
-app.post("/receiveMessage", function(req,res){
+app.post("/messages", function(req,res){
     var Message = req.body.Body;
     messagesArray.push(Message);
     res.redirect("/messages");
