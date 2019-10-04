@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Simple Chat</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+    <form style="display: flex;" class="mt-4" action="/sendMessage" method="POST">
+        <input type="text" placeholder="Type a message" name="message" style="flex-grow: 2;">
+        <input type="submit" class="btn btn-primary mx-2" value="Send">
+    </form>
+    <div class="border mt-5" style="   width: 100%;
+    height: 200px;
+    overflow-y: scroll;
+    overflow-x:scroll;">
+    <% for(var i=0; i< Msg.length; i++){ %>
+        <div class="mx-2"><%= Msg[i] %></div>
+    <% } %>
+</div>
+</div>
+</body>
+</html>
