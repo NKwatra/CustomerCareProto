@@ -6,7 +6,7 @@ var server = app.listen(process.env.PORT|| 3000, function(){
     console.log("Server has started!!!");
 }); 
 
-var messagesArray = ["Hi there", "Hey", "How are you?", "I am good, wbu?", "Sailing in the same boat"];
+var messagesArray = [];
 
 var io = require("socket.io")(server);
 
