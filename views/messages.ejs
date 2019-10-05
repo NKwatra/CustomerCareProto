@@ -9,18 +9,39 @@
 </head>
 <body>
     <div class="container">
-    <form style="display: flex;" class="mt-4" action="/sendMessage" method="POST">
-        <input type="text" placeholder="Type a message" name="message" style="flex-grow: 2;">
-        <input type="submit" class="btn btn-primary mx-2" value="Send">
+    <form style="display: flex;" class="mt-4">
+        <input type="text" placeholder="Type a message" name="message" style="flex-grow: 2;" id="message">
+        <input type="button" class="btn btn-primary mx-2" value="Send" id="sendMessageButton">
     </form>
     <div class="border mt-5" style="   width: 100%;
     height: 200px;
     overflow-y: scroll;
-    overflow-x:scroll;">
+    overflow-x:scroll;" id="chatroom">
     <% for(var i=0; i< Msg.length; i++){ %>
         <div class="mx-2"><%= Msg[i] %></div>
     <% } %>
 </div>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+<script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
+<script>
+   $(function(){
+       var socket = io.connect("http://localhost:3000");
+
+       $("#sendMessageButton").click(function(){
+           var Message = $("#message").val();
+           $("#chatroom").append(`<div class="mx-2">${Message}</div>`);
+           socket.emit('new_message', {message: Message});
+       })
+       
+       socket.on("new_message", (data) =>{
+           console.log(data);
+           $("#chatroom").append(`<div class="mx-2">${data.message}</div>`);
+       });
+   });
+</script>
 </body>
 </html>
