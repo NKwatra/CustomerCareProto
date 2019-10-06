@@ -29,7 +29,7 @@
   crossorigin="anonymous"></script>
 <script>
    $(function(){
-       var socket = io.connect("localhost:3000");
+       var socket = io.connect("https://simple-chat12.herokuapp.com");
 
        $("#sendMessageButton").click(function(){
            var Message = $("#message").val();
