@@ -42,16 +42,28 @@ app.get("/messages",function(req,res){
 app.post("/receiveMessage", function(req,res){
     var Message = req.body.Body;
     var Sender = req.body.From;
-    if(Message.replaceAll(" ",'').toUpperCase == "Endchat".toUpperCase)
-        liveChat.liveChatsNumbers[Sender] = false;
 
+    // if user ends chat
+    if(Message.replace(/[^a-z]/gi,'').toUpperCase().search("Endchat".toUpperCase()) != -1)   
+    {
+        liveChat.liveChatsNumbers[Sender] = false;
+        client.messages.create({
+            from: 'whatsapp:+14155238886',
+            body: "Live chat ended!!",
+            to: Sender,
+        }).then(message => console.log(message));
+        return;
+    }    
+
+    // if live chat is on
     if(liveChat.liveChatsNumbers.hasOwnProperty(Sender) && liveChat.liveChatsNumbers[Sender] === true){
         console.log("Live chat on");
         messagesArray.push(Message);
         sockett.emit("new_message", {message: Message});
     }else 
     {
-        if(liveChat.liveChatsNumbers.hasOwnProperty(Sender) || Message.replaceAll(" ","").toUpperCase() == "LiveChat".toUpperCase())
+        // user asks for live chat
+        if(Message.replace(/[^a-z]/gi,"").toUpperCase().search("LiveChat".toUpperCase()) != -1)
         {
             console.log("Live chat started");
             liveChat.liveChatsNumbers[Sender] = true;
@@ -63,6 +75,8 @@ app.post("/receiveMessage", function(req,res){
         }else 
         {
             console.log("Reply form bot");
+
+            // first message, store user's number
             if(!liveChat.liveChatsNumbers.hasOwnProperty(Sender)){
                 liveChat.liveChatsNumbers[Sender] = false;
                 console.log("Number saved");
