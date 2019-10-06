@@ -4,7 +4,8 @@ var bodyParser = require('body-parser');
 
 var server = app.listen(process.env.PORT|| 3000, function(){
     console.log("Server has started!!!");
-}); 
+});
+var liveChat = require('./liveChat');
 
 var messagesArray = [];
 
@@ -39,7 +40,9 @@ app.get("/messages",function(req,res){
 });
 
 app.post("/receiveMessage", function(req,res){
+    console.log(req.body);
     var Message = req.body.Body;
+    console.log(Message);
     messagesArray.push(Message);
     sockett.emit("new_message", {message: Message});
 });
