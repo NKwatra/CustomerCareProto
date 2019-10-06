@@ -40,9 +40,42 @@ app.get("/messages",function(req,res){
 });
 
 app.post("/receiveMessage", function(req,res){
-    console.log(req.body);
     var Message = req.body.Body;
-    console.log(Message);
-    messagesArray.push(Message);
-    sockett.emit("new_message", {message: Message});
+    var Sender = req.body.From;
+    if(Message.replaceAll(" ",'').toUpperCase == "Endchat".toUpperCase)
+        liveChat.liveChatsNumbers[Sender] = false;
+
+    if(liveChat.liveChatsNumbers.hasOwnProperty(Sender) && liveChat.liveChatsNumbers[Sender] === true){
+        console.log("Live chat on");
+        messagesArray.push(Message);
+        sockett.emit("new_message", {message: Message});
+    }else 
+    {
+        if(liveChat.liveChatsNumbers.hasOwnProperty(Sender) || Message.replaceAll(" ","").toUpperCase() == "LiveChat".toUpperCase())
+        {
+            console.log("Live chat started");
+            liveChat.liveChatsNumbers[Sender] = true;
+            client.messages.create({
+                from: 'whatsapp:+14155238886',
+                body: "Hang on! we are connecting you to a Customer Care Executive to help you with your query. We appreciate your patience",
+                to: Sender,
+            }).then(message => console.log(message));
+        }else 
+        {
+            console.log("Reply form bot");
+            if(!liveChat.liveChatsNumbers.hasOwnProperty(Sender)){
+                liveChat.liveChatsNumbers[Sender] = false;
+                console.log("Number saved");
+                console.log(liveChat.liveChatsNumbers);
+            }
+
+            // message would be processed here and replied via bot by default 
+            // received message is stored in Message variable  
+            client.messages.create({
+                from: 'whatsapp:+14155238886',
+                body: "Sent via bot",// replace this message with the required one
+                to: Sender,
+            }).then(message => console.log(message));
+        }
+    }    
 });
