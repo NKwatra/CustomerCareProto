@@ -1,0 +1,42 @@
+body
+{
+    background: #e0e0e0;
+}
+.custom-spacing{
+    padding: 0;
+    margin: 0;
+}
+.light-border
+{
+    border-top: solid 1px lightgray;
+}
+
+.chat-label{
+   border-radius: 0;
+}
+
+.bg-user{
+    background: white;
+}
+
+.bg-executive{
+    background: #dcf8c6;
+}
+
+#chatroom{
+    height: 55vh;
+    overflow-y: scroll;
+    background: #e5ddd5;
+}
+#chat-container{
+    position: fixed;
+    bottom: 0;
+    width: 23%;
+    right: 30px;
+    background: white;
+}
+
+#sendMessageButton
+{
+    margin-left: 10px;
+}
