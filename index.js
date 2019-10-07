@@ -7,6 +7,8 @@ var server = app.listen(process.env.PORT|| 3000, function(){
 });
 var liveChat = require('./liveChat');
 
+app.use(express.static("Public"));
+
 var messagesArray = [];
 
 var io = require("socket.io")(server);
@@ -72,6 +74,7 @@ app.post("/receiveMessage", function(req,res){
                 body: "Hang on! we are connecting you to a Customer Care Executive to help you with your query. We appreciate your patience",
                 to: Sender,
             }).then(message => console.log(message));
+            sockett.emit("new_message", {message: "New complaint", from: Sender});
         }else 
         {
             console.log("Reply form bot");

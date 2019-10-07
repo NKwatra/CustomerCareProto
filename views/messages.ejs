@@ -1,47 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Simple Chat</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="./messages.css">
 </head>
-<body>
-    <div class="container">
-    <form style="display: flex;" class="mt-4">
-        <input type="text" placeholder="Type a message" name="message" style="flex-grow: 2;" id="message">
-        <input type="button" class="btn btn-primary mx-2" value="Send" id="sendMessageButton">
-    </form>
-    <div class="border mt-5" style="   width: 100%;
-    height: 200px;
-    overflow-y: scroll;
-    overflow-x:scroll;" id="chatroom">
-    <% for(var i=0; i< Msg.length; i++){ %>
-        <div class="mx-2"><%= Msg[i] %></div>
-    <% } %>
-</div>
-</div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
-<script
-  src="https://code.jquery.com/jquery-3.4.1.min.js"
-  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-  crossorigin="anonymous"></script>
-<script>
-   $(function(){
-       var socket = io.connect("https://simple-chat12.herokuapp.com");
 
-       $("#sendMessageButton").click(function(){
-           var Message = $("#message").val();
-           $("#chatroom").append(`<div class="mx-2">${Message}</div>`);
-           socket.emit('new_message', {message: Message});
-       })
-       
-       socket.on("new_message", (data) =>{
-           console.log(data);
-           $("#chatroom").append(`<div class="mx-2">${data.message}</div>`);
-       });
-   });
-</script>
+<body>
+    <div id="chat-container">
+        <button class="chat-label btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#chatwindow" aria-controls="chatwindow"
+            aria-expanded="true" id="chat-header"></button>
+        <div class="collapse" id="chatwindow" class="container">
+            <div class="row custom-spacing flex-column" id="chatroom">
+                <% for(var i=0; i< Msg.length; i++){ %>
+                    <div class="mx-2">
+                        <%= Msg[i] %>
+                    </div>
+                    <% } %>
+            </div>
+            <div class="row custom-spacing light-border">
+                <div class="col-10 custom-spacing">
+                    <input type="text" placeholder="Type a message" name="message" id="message" class="form-control">
+                </div>
+                <div class="col-2 custom-spacing">
+                    <button class="btn btn-success rounded-circle" id="sendMessageButton"><i class="fas fa-paper-plane"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
+    <script src="./messages.js"></script>
+    <script src="https://kit.fontawesome.com/179402fb31.js"></script>
 </body>
+
 </html>
