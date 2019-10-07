@@ -17,15 +17,20 @@ body
 
 .bg-user{
     background: white;
+    display: inline-block;
+    max-width: 85%;
 }
 
 .bg-executive{
     background: #dcf8c6;
+    display: inline-block;
+    max-width: 85%;
+    float: right;
 }
 
 #chatroom{
     height: 55vh;
-    overflow-y: scroll;
+    overflow: auto;
     background: #e5ddd5;
 }
 #chat-container{
